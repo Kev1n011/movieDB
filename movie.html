@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Película</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{ pelicula.title }}</h1>
+        <p>{{ pelicula.overview }}</p>
+        <img :src="'http://image.tmdb.org/t/p/w500' + pelicula.poster_path" alt="Poster de la Película">
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    pelicula: JSON.parse(localStorage.getItem('peliculaSeleccionada')) || {}
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
