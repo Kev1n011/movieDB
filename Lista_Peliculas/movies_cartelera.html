@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .column {
+            float: left;
+            padding: 0 10px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 30vh;
+            margin-top: 5vh;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        @media screen and (max-width: 600px) {
+            .column {
+                width: 100%;
+                display: block;
+                margin-bottom: 20px;
+            }
+
+            .button-69 {
+                font-size: 14px;
+                height: 55px;
+                line-height: 55px;
+                width: 150px;
+            }
+        }
+
+        .font-weight-light {
+            margin-top: 5vw;
+            margin-left: 32vh;
+        }
+
+        .card {
+            flex: 1 1 150px;
+            height: 355px;
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 70%;
+        }
+
+        .rating-container {
+            height: 50px;
+            width: 50px;
+            background-color: #000000;
+            border-radius: 50%;
+            margin-left: 80%;
+            display: inline-block;
+        }
+
+        .rating-container p {
+            color: rgb(255, 255, 255);
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 30%;
+            margin-left: 25%;
+        }
+
+        .menu-superior {
+            background-color: rgb(20, 16, 82);
+            height: 7.5vh;
+            width: 100vw;
+        }
+
+        .btn-mostrar-mas {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        /* DISEÑO BOTÓN */
+        .button-69 {
+            background-color: initial;
+            background-image: linear-gradient(#8614f8 0, #760be0 100%);
+            border-radius: 5px;
+            border-style: none;
+            box-shadow: rgba(245, 244, 247, .25) 0 1px 1px inset;
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            font-family: Inter, sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            height: 60px;
+            line-height: 60px;
+            margin-left: auto;
+            margin-right: auto;
+            outline: 0;
+            text-align: center;
+            transition: all .3s cubic-bezier(.05, .03, .35, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            width: 10%;
+        }
+
+        .button-69:hover {
+            opacity: .7;
+        }
+
+        .button-69:focus {
+            outline: none;
+        }
+        
+
+
+     
+    </style>
+</head>
+
+<body>
+    <div class="menu-superior">
+        <div class="opciones">
+            <h4>puto</h4>
+        </div>
+    </div>
+
+    <div id="main-cartelera">
+
+        <h2 class="font-weight-light">En cartelera</h2>
+        <div class="row">
+            <div v-for="pelicula in peliculas" :key="pelicula.id" class="col-6 col-md-4 col-lg-2">
+                <div class="card">
+                    <img :src="'https://image.tmdb.org/t/p/w500/' + pelicula.poster_path" class="card-img-top"
+                        alt="Poster">
+                    <div class="card-body">
+                        <h6 class="card-title">{{pelicula.title}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="button-69" @click="mostrar_mas()"> Mostrar más</button>
+
+
+
+
+
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/script/cartelera.js"></script>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+</body>
+
+</html>

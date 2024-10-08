@@ -17,7 +17,7 @@
 
 
         #main {
-            background-color: gray;
+            background-color: rgb(255, 255, 255);
         }
 
         body {
@@ -25,7 +25,10 @@
             overflow-x: hidden;
         }
 
-
+        .font-weight-light {
+            margin-top: 5vh;
+            margin-left: 1vw;
+        }
 
         .card-img-top {
             margin-left: 50px;
@@ -38,6 +41,14 @@
             min-height: 300px;
             min-width: 300px;
             margin-right: 5px;
+        }
+
+        .card-body p {
+            font-size: 16px;
+        }
+
+        .card-body img {
+            cursor: pointer;
         }
 
         .card-block {
@@ -70,7 +81,7 @@
             background: #555;
         }
 
-        .rating {
+        .rating-container {
             height: 50px;
             width: 50px;
             background-color: #000000;
@@ -78,31 +89,124 @@
             margin-left: 80%;
             display: inline-block;
         }
-        .rating p {
+
+        .rating-container p {
             color: rgb(255, 255, 255);
             font-size: 15px;
             font-weight: bold;
             margin-top: 30%;
             margin-left: 25%;
         }
+
+        /*MENÚ SUPERIOR*/
+
+        .menu-superior {
+            background-color: rgb(20, 16, 82);
+            height: 7.5vh;
+            width: 100vw;
+        }
+
+        .opciones {
+            color: #ffffff;
+            width: 25%;
+            margin-left: 25%;
+            text-align: center;
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            justify-content: space-around;
+        }
+
+        .opciones h4 {
+            margin-right: 30px;
+            margin-top: 1vh;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .opciones-dropdown {
+            position: relative;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            text-align: left;
+            min-width: 11vw;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            z-index: 1;
+            top: 100%;
+        }
+
+        .dropdown li {
+            list-style: none;
+            color: #000000;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .dropdown a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: block; /* Asegura que el enlace ocupe todo el área del li */
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd; /* Cambia el fondo al pasar el ratón */
+        }
+
+        .opciones-dropdown:hover .dropdown {
+            display: block;
+        }
     </style>
 </head>
 
 <body>
-    <div id="main">
+    <div class="menu-superior">
+        <div class="opciones">
+            <div class="opciones-dropdown">
+                <h4>Películas</h4>
+                <div class="dropdown">
+                    <li><a href="./Lista_Peliculas/movies_popular.html">Populares</a></li>
+                    <li><a href="./Lista_Peliculas/movies_cartelera.html">En cartelera</a></li>
+                    <li><a href="./Lista_Peliculas/movies_rating.html">Mejor calificados</a></li>
+                </div>
+            </div>
+            <div class="opciones-dropdown">
+                <h4>Series de TV</h4>
+                <div class="dropdown">
+                    <li><a href="/series_popular.html">Populares</a></li>
+                    <li><a href="#mejor-series">Mejor calificados</a></li>
+                </div>
+            </div>
+            <div class="opciones-dropdown">
+                <h4>Personas</h4>
+                <div class="dropdown">
+                    <li><a href="/series_popular.html">Populares</a></li>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-        <button @click="siguiente_pagina"> Siguiente</button>
-
-
-
+    <div id="main-popular">
+        <h2 class="font-weight-light">Populares</h2>
         <div class="container-fluid py-2">
-            <h2 class="font-weight-light">Bootstrap 5 Horizontal Scrolling Cards with Flexbox</h2>
             <div class="d-flex flex-row flex-nowrap">
                 <div v-for="pelicula in peliculas" :key="pelicula.id" class="card card-body">
                     <img @click="guardarDatos(pelicula)" :src="'http://image.tmdb.org/t/p/w500' + pelicula.poster_path">
                     <p>{{pelicula.title}}</p>
-                    <div class="rating">
+                    <div class="rating-container">
                         <p>{{pelicula.vote_average}}%</p>
                     </div>
                 </div>
@@ -113,125 +217,50 @@
 
 
 
+
+
+    </div>
+
+    <div id="main-rating">
+        <h2 class="font-weight-light">Ordenados por rating</h2>
+        <div class="container-fluid py-2">
+            <div class="d-flex flex-row flex-nowrap">
+                <div v-for="pelicula in peliculas" :key="pelicula.id" class="card card-body">
+                    <img @click="guardarDatos(pelicula)" :src="'http://image.tmdb.org/t/p/w500' + pelicula.poster_path">
+                    <p>{{pelicula.title}}</p>
+                    <div class="rating-container">
+                        <p>{{pelicula.vote_average}}%</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="/script/popular.js"></script>
+    <script src="/script/rating.js"></script>
 
-    <script>
-
-        const { createApp, ref } = Vue
-
-        createApp({
-
-            setup() {
-                const name_app = ref('Hello vue!')
-                const peliculas = ref([]);
-                let paginas = ref(3)
-
-                return {
-                    peliculas,
-                    paginas
-
-
-                }
-            },
-
-            /*
-            ORDERNAR POR:
-            POPULAR: "https://api.themoviedb.org/3/movie/popular?api_key=81897c6294319bfc06c39ba740a6bfab&page="
-            CONTEO DE VOTOS: https://api.themoviedb.org/3/discover/movie?sort_by=vote_count.desc&api_key=81897c6294319bfc06c39ba740a6bfab&page=
-            RATING: https://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&api_key=81897c6294319bfc06c39ba740a6bfab&page=
-            */
-
-            methods: {
-
-                async obtener_peliculas() {
-
-
-                    const url = "https://api.themoviedb.org/3/movie/popular?api_key=81897c6294319bfc06c39ba740a6bfab&page=" + this.paginas;
-                    try {
-                        const response = await fetch(url);
-                        if (!response.ok) {
-                            throw new Error(`Response status: ${response.status}`);
-                        }
-                        const json = await response.json();
-                        this.peliculas = [] //Vaciar las películas de la pág anterior
-
-                        json.results.forEach(pelicula => {
-                            console.log('Título de la película:', pelicula.title);
-                            this.peliculas.push(pelicula)
-
-                        });
-
-
-                    } catch (error) {
-                        console.error();
-                    }
-
-
-
-                },
-
-                //
-                siguiente_pagina() {
-                    this.paginas++;
-                    console.log(this.paginas)
-                    this.obtener_peliculas()
-                },
-
-                guardarDatos(pelicula) {
-                    localStorage.setItem('peliculaSeleccionada', JSON.stringify(pelicula));
-                    // Redirige a la segunda página
-                    window.location.href = 'movie.html';
-                }
-
-
-
-            },
-
-            async mounted() {
-
-                const url = "https://api.themoviedb.org/3/movie/popular?api_key=81897c6294319bfc06c39ba740a6bfab&page=" + this.paginas;
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`Response status: ${response.status}`);
-                    }
-                    const json = await response.json();
-
-                    json.results.forEach(pelicula => {
-                        console.log('Título de la película:', pelicula.title);
-
-                        //Se obtiene el promedio de votos y se convierte a porcentraje
-                        let rating_porcentaje =  Math.round(pelicula.vote_average * 10) / 10
-                        pelicula.vote_average = rating_porcentaje * 10;
-                        this.peliculas.push(pelicula)
-
-                    });
-
-                    this.peliculas.forEach(pelicula => {
-                        console.log("titulo: " + pelicula.poster_path)
-                    })
-
-
-                } catch (error) {
-                    console.error();
-                }
-
-
-
-
-
-
-            }
-
-        }).mount('#main')
-    </script>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
 </body>
+
+<script>
+    //Comprobar si el token existe en el localStorage
+    document.addEventListener('DOMContentLoaded', function () {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            alert("No tienes acceso a esta página. Por favor, inicia sesión.");
+            window.location.href = './login.html'; 
+        } else {
+            console.log("Token encontrado, puedes acceder.");
+        }
+    });
+</script>
 
 </html>

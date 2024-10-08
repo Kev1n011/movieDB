@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="estilo.css">
+
+    <!-- Link del diseño: https://codepen.io/khadkamhn/pen/ZGvPLo  -->
+    
+</head>
+
+<body>
+    <div id="main">
+        
+
+        <div class="login-wrap">
+            <div class="login-html">
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                <div class="login-form">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <label for="email" class="label">Correo electrónico</label>
+                            <input v-model="usuario.email" id="email" type="email" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Password</label>
+                            <input v-model="usuario.contrasena" id="pass" type="password" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <input id="check" type="checkbox" class="check" checked>
+                            <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                        </div>
+                        <div class="group">
+                            <button @click="validarFormulario" class="button">Acceder</button>
+                        </div>
+                        <div class="hr"></div>
+                        
+                    </div>
+                    <div class="sign-up-htm">
+                        <div class="group">
+                            <label for="user" class="label">Username</label>
+                            <input id="user" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Password</label>
+                            <input id="pass" type="password" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Repeat Password</label>
+                            <input id="pass" type="password" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Email Address</label>
+                            <input id="pass" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <input type="submit" class="button" value="Sign Up">
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-1">Already Member?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const usuario = ref({
+                    email: '',
+                    contrasena: '',
+                  
+                    
+                });
+
+                return {
+                    usuario,
+                };
+            },
+            methods: {
+                async obtenerToken() {
+                    try {
+                        const myHeaders = new Headers();
+                        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MTg5N2M2Mjk0MzE5YmZjMDZjMzliYTc0MGE2YmZhYiIsIm5iZiI6MTcyODM3NTU2MS4zODQ1NDYsInN1YiI6IjY2ZjNmOTk3M2E5NWE1YmNkYTIyZmExNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.X2oJcLY9SmvukVT9Ppz_REHsLhlXWPFYGhl8qvX1iIs");
+
+                        const requestOptions = {
+                            method: 'GET',
+                            headers: myHeaders,
+                            redirect: 'follow'
+                        };
+
+                        const response = await fetch("https://api.themoviedb.org/3/authentication/token/new", requestOptions);
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            //Guardar token en el localStorage
+                            localStorage.setItem('token', result.request_token);
+                            console.log("Token guardado en localStorage:", result.request_token);
+                        } else {
+                            console.error("Error al obtener el token:", result);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                },
+
+                async validarFormulario() {
+                    if (this.usuario.contrasena && this.usuario.email) {
+                        await this.obtenerToken(); 
+                        window.location.href = './movies.html';
+                    } else {
+                        alert("Por favor, completa todos los campos.");
+                    }
+                }
+            },
+        }).mount('#main');
+    </script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+</body>
+
+</html>
